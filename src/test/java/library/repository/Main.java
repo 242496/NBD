@@ -1,10 +1,15 @@
 package library.repository;
 
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
+import java.util.List;
+import managers.ClientManager;
 import model.Admin;
 import model.Advanced;
 import model.Basic;
@@ -17,11 +22,9 @@ import org.apache.avalon.framework.parameters.ParameterException;
 
 public class Main {
     public static void main(String[] args) throws ParameterException {
-        //TODO max rents
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
         EntityManager em = emf.createEntityManager();
-        EntityTransaction et = em.getTransaction();
-
+        ClientManager cm = new ClientManager(em);
 
 
         Intermediate intermediate = new Intermediate();
@@ -36,27 +39,13 @@ public class Main {
         Basic basic = new Basic();
         Client client3 = new Client("Podgor", basic);
 
-        Client client4 = new Client("White2115", intermediate);
-
+        Client client4 = new Client("White115", intermediate);
 
         Rent rent1 = new Rent(client1, machine1);
         Rent rent2 = new Rent(client2, machine2);
         Rent rent3 = new Rent(client3, machine1);
         Rent rent4 = new Rent(client4, machine1);
         Rent rent5 = new Rent(client1, machine2);
-//        System.out.println(client2.getType().getClientDiscount());
-//        System.out.println(client1.getType().getClientDiscount());
-//
-//        System.out.println(advanced.getClientDiscount());
-//        System.out.println(intermediate.getMaxRents());
-//        System.out.println(client1.getClientRents());
-//        System.out.println(machine1.getBaseCost());
-//        System.out.println(rent1.calculateRentFinalCost());
-//        System.out.println(client1.getType().getClientDiscount());
-//
-//        System.out.println(rent2.calculateRentFinalCost());
-//        System.out.println(client2.getType().getClientDiscount());
-//        System.out.println(client1.getType().getClientDiscount());
 
 
         em.getTransaction().begin();
@@ -66,6 +55,16 @@ public class Main {
         em.persist(rent4);
         em.persist(rent5);
         em.getTransaction().commit();
+
+
+        //Tests
+
+        List<Client> list = cm.findAll();
+        assertEquals(list.size(),4);
+        assertTrue(list.contains(client1));
+        assertTrue(list.contains(client2));
+        assertTrue(list.contains(client3));
+        assertTrue(list.contains(client4));
 
 
         emf.close();

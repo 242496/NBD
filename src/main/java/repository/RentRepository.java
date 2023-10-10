@@ -1,0 +1,29 @@
+package repository;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.From;
+import java.util.List;
+import model.Rent;
+
+public class RentRepository extends Repository<Rent> {
+    public RentRepository(EntityManager entityManager) { super(entityManager); }
+
+    @Override
+    public List<Rent> findAll() {
+        List<Rent> list;
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Rent> query = cb.createQuery(Rent.class);
+        From<Rent,Rent> from = query.from(Rent.class);
+        query.select(from);
+        list = em.createQuery(query).getResultList();
+        return list;
+    }
+
+
+    public Rent getByID(long ID) {
+        Rent rent =  em.find(Rent.class, ID);
+        return rent;
+    }
+}

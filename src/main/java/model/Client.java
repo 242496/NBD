@@ -24,9 +24,13 @@ public class Client implements Serializable {
     @JoinColumn (name= "Type_id")
     private ClientType Type;
 
+    @Column
+    private int ActiveRents;
+
     public Client(String Username, ClientType Type) {
         this.Username = Username;
         this.Type = Type;
+        this.ActiveRents = Type.getMaxRents();
     }
 
     public int getClientRents() {
@@ -44,6 +48,10 @@ public class Client implements Serializable {
     public long getID() {
         return ID;
     }
+
+    public int getActiveRents() { return ActiveRents; }
+
+    public void setActiveRents(int activeRents) { ActiveRents = activeRents; }
 
     public void setID(long ID) {
         this.ID = ID;

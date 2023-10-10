@@ -68,4 +68,16 @@ public class Rent implements Serializable {
         calendar.add(Calendar.DATE, client.getType().getMaxDays());
         return calendar.getTime();
     }
+
+    public long getID() { return ID; }
+    public Client getClient() { return client; }
+    public Machine getMachine() { return machine; }
+    public Date getBeginTime() { return beginTime; }
+    public Date getEndTime() { return endTime; }
+
+    public void setID(long ID) { this.ID = ID; }
+    public void setClient(Client client) { this.client = client; }
+    public void setMachine(Machine machine) { this.machine = machine; }
+    public void setBeginTime(Date beginTime) { this.beginTime = beginTime; }
+    public void setEndTime(Date endTime) { this.endTime = endTime; }
 }
