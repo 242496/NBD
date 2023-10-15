@@ -2,8 +2,8 @@ package managersTest;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.OptimisticLockException;
 import java.util.List;
-import java.util.concurrent.RejectedExecutionException;
 import model.Client;
 import model.Machine;
 import model.Rent;
@@ -46,12 +46,12 @@ public class RentManager {
         return rent;
     }
 
-    public Rent addRent(Client client, Machine machine) throws RejectedExecutionException, ParameterException {
+    public Rent addRent(Client client, Machine machine) throws OptimisticLockException, ParameterException {
         Rent rent;
         if(client.getActiveRents() >= client.getType().getMaxRents()) {
-            throw new RejectedExecutionException("Client with ID: " + client.getID() + " has no available rents left");
+            throw new OptimisticLockException("Client with ID: " + client.getID() + " has no available rents left");
         } else if (machine.isRented()) {
-            throw new RejectedExecutionException("Machine with ID: " + machine.getID() + " is already rented");
+            throw new OptimisticLockException("Machine with ID: " + machine.getID() + " is already rented");
         } else {
             rent = new Rent(client, machine);
             et = em.getTransaction();

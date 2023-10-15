@@ -9,12 +9,12 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.RejectedExecutionException;
 import lombok.NoArgsConstructor;
 import org.apache.avalon.framework.parameters.ParameterException;
 
@@ -46,7 +46,7 @@ public class Rent extends AbstractEntity{
     @Column
     private Date endTime;
 
-    public Rent(Client client, Machine machine) throws RejectedExecutionException, ParameterException {
+    public Rent(Client client, Machine machine) throws OptimisticLockException, ParameterException {
         this.client = client;
         this.machine = machine;
         this.beginTime = new Date();

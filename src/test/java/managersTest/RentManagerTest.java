@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.OptimisticLockException;
 import jakarta.persistence.Persistence;
 import java.util.List;
-import java.util.concurrent.RejectedExecutionException;
 import model.Advanced;
 import model.Basic;
 import model.Client;
@@ -81,7 +81,7 @@ public class RentManagerTest {
         Rent rent = rm.addRent(client3, machine3);
         activeRents = client3.getActiveRents();
         assertEquals(1, activeRents);
-        assertThrows(RejectedExecutionException.class, ()->rm.addRent(client3, machine2));
+        assertThrows(OptimisticLockException.class, ()->rm.addRent(client3, machine2));
         rm.removeRent(rent.getID());
     }
 
@@ -90,7 +90,7 @@ public class RentManagerTest {
         assertFalse(machine1.isRented());
         Rent rent = rm.addRent(client4, machine1);
         assertTrue(machine1.isRented());
-        assertThrows(RejectedExecutionException.class, ()->rm.addRent(client3, machine1));
+        assertThrows(OptimisticLockException.class, ()->rm.addRent(client3, machine1));
     }
 
     @Test
