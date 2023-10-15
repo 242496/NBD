@@ -2,13 +2,11 @@ package repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.LockModeType;
 import jakarta.persistence.Persistence;
-import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
 
 public abstract class Repository<T> {
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("default");
+    EntityManagerFactory emf = Persistence.createEntityManagerFactory("POSTGRES_MACHINE_RENT");
     EntityManager em = emf.createEntityManager();
 
     public Repository(EntityManager entityManager) {
@@ -27,14 +25,6 @@ public abstract class Repository<T> {
         if(em.contains(object)){
             em.remove(object);
         }
-    }
-
-    public List<T> findByQuery(CriteriaQuery<T> query) {
-        List<T> list;
-
-        list = em.createQuery(query).setLockMode(LockModeType.OPTIMISTIC).getResultList();
-
-        return list;
     }
 
     public abstract List<T> findAll();

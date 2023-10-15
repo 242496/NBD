@@ -1,4 +1,4 @@
-package managers;
+package managersTest;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -7,8 +7,8 @@ import model.Machine;
 import repository.MachineRepository;
 
 public class MachineManager {
-    private MachineRepository machineRepository;
-    private EntityManager em;
+    private final MachineRepository machineRepository;
+    private final EntityManager em;
     private EntityTransaction et;
 
     public MachineManager(EntityManager entityManager) {
@@ -39,8 +39,8 @@ public class MachineManager {
         return machine;
     }
 
-    public Machine addMachine(int CPUs, int RAM, int Disk, Machine.SystemType System) {
-        Machine machine = new Machine(CPUs, RAM, Disk, System);
+    public Machine addMachine(int CPUs, int RAM, int Disk, Machine.SystemType System, boolean isRented) {
+        Machine machine = new Machine(CPUs, RAM, Disk, System, isRented);
         et = em.getTransaction();
         et.begin();
         machineRepository.add(machine);

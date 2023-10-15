@@ -2,8 +2,6 @@ package model;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-
-import java.io.Serializable;
 import lombok.NoArgsConstructor;
 
 
@@ -12,15 +10,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "Client")
 @Access(AccessType.FIELD)
 @NoArgsConstructor
-public class Client implements Serializable {
+public class Client extends AbstractEntity{
     @Id
     @GeneratedValue
     @Column(name = "Client_ID")
     private long ID;
+
     @Column
     private String Username;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn (name= "Type_id")
     private ClientType Type;
 
@@ -30,12 +29,9 @@ public class Client implements Serializable {
     public Client(String Username, ClientType Type) {
         this.Username = Username;
         this.Type = Type;
-        this.ActiveRents = Type.getMaxRents();
+        this.ActiveRents = getActiveRents();
     }
 
-    public int getClientRents() {
-        return this.Type.getMaxRents();
-    }
 
     public double applyDiscount(double price) {
         return this.Type.applyClientDiscount(price);

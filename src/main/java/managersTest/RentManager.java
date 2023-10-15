@@ -1,8 +1,9 @@
-package managers;
+package managersTest;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import java.util.List;
+import java.util.concurrent.RejectedExecutionException;
 import model.Client;
 import model.Machine;
 import model.Rent;
@@ -10,8 +11,8 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import repository.RentRepository;
 
 public class RentManager {
-    private RentRepository rentRepository;
-    private EntityManager em;
+    private final RentRepository rentRepository;
+    private final EntityManager em;
     private EntityTransaction et;
 
     public RentManager(EntityManager entityManager) {
@@ -22,7 +23,10 @@ public class RentManager {
     public void removeRent(long ID) {
         et = em.getTransaction();
         et.begin();
-        rentRepository.remove(rentRepository.getByID(ID));
+        Rent rent = rentRepository.getByID(ID);
+        rent.getClient().setActiveRents(rent.getClient().getActiveRents()-1);
+        rent.getMachine().setRented(false);
+        rentRepository.remove(rent);
         et.commit();
     }
 
@@ -42,18 +46,20 @@ public class RentManager {
         return rent;
     }
 
-    public Rent addRent(Client client, Machine machine) throws ParameterException {
+    public Rent addRent(Client client, Machine machine) throws RejectedExecutionException, ParameterException {
         Rent rent;
-        if(client.getActiveRents() <= 0) {
-            throw new ParameterException("Client with ID: " + client.getID() + " has no available rents left");
-        }
-        else {
+        if(client.getActiveRents() >= client.getType().getMaxRents()) {
+            throw new RejectedExecutionException("Client with ID: " + client.getID() + " has no available rents left");
+        } else if (machine.isRented()) {
+            throw new RejectedExecutionException("Machine with ID: " + machine.getID() + " is already rented");
+        } else {
             rent = new Rent(client, machine);
             et = em.getTransaction();
             et.begin();
             rentRepository.add(rent);
+            client.setActiveRents(client.getActiveRents()+1);
+            machine.setRented(true);
             et.commit();
-            client.setActiveRents(client.getActiveRents() - 1);
         }
         return rent;
     }

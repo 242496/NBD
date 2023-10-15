@@ -12,7 +12,7 @@ public class ClientRepository extends Repository<Client> {
     public ClientRepository(EntityManager entityManager) {
         super(entityManager);
     }
-
+    @Override
     public List<Client> findAll() {
         List<Client> list;
         CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -26,7 +26,6 @@ public class ClientRepository extends Repository<Client> {
 
     @Override
     public Client getByID(long ID) {
-        Client client = em.find(Client.class, ID);
-        return client;
+        return em.find(Client.class, ID);
     }
 }

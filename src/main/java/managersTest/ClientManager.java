@@ -1,4 +1,4 @@
-package managers;
+package managersTest;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
@@ -8,8 +8,8 @@ import model.ClientType;
 import repository.ClientRepository;
 
 public class ClientManager {
-    private ClientRepository clientRepository;
-    private EntityManager em;
+    private final ClientRepository clientRepository;
+    private final EntityManager em;
     private EntityTransaction et;
 
     public ClientManager(EntityManager entityManager) {
@@ -41,7 +41,6 @@ public class ClientManager {
     }
 
     public Client addClient(String Username, ClientType Type) {
-        //TODO cannot add client with the same username
         Client client = new Client(Username, Type);
         et = em.getTransaction();
         et.begin();

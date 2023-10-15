@@ -6,20 +6,16 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.UUID;
-import lombok.Getter;
+import java.util.concurrent.RejectedExecutionException;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.apache.avalon.framework.parameters.ParameterException;
 
 @Entity
@@ -27,30 +23,30 @@ import org.apache.avalon.framework.parameters.ParameterException;
 @Table(name = "Rent")
 @Access(AccessType.FIELD)
 @NoArgsConstructor
-public class Rent implements Serializable {
+public class Rent extends AbstractEntity{
 
     @Id
     @GeneratedValue
     @Column(name = "Rent_ID")
     private long ID;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn
     @NotNull
     private Client client;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn
     @NotNull
     private Machine machine;
 
     @Column
     private Date beginTime;
-    @Setter
+
     @Column
     private Date endTime;
 
-    public Rent(Client client, Machine machine) throws ParameterException {
+    public Rent(Client client, Machine machine) throws RejectedExecutionException, ParameterException {
         this.client = client;
         this.machine = machine;
         this.beginTime = new Date();

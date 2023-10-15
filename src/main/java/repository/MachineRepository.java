@@ -21,9 +21,8 @@ public class MachineRepository extends Repository<Machine> {
         return list;
     }
 
-
+    @Override
     public Machine getByID(long ID) {
-        Machine machine =  em.find(Machine.class, ID);
-        return machine;
+        return em.find(Machine.class, ID);
     }
 }

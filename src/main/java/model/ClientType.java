@@ -10,18 +10,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.validation.Valid;
-import java.io.Serializable;
 
 @Entity
 @Valid
 @DiscriminatorColumn(name = "Type")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Access(AccessType.FIELD)
-public abstract class ClientType implements Serializable {
+public abstract class ClientType extends AbstractEntity{
     @Id
     @GeneratedValue
     @Column(name = "Type_ID")
-    private long ID;
+    protected long ID;
     @Column
     protected int MaxRents;
     @Column

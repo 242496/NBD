@@ -8,7 +8,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import java.io.Serializable;
 import lombok.NoArgsConstructor;
 import org.apache.avalon.framework.parameters.ParameterException;
 
@@ -17,10 +16,10 @@ import org.apache.avalon.framework.parameters.ParameterException;
 @Table(name = "Machine")
 @Access(AccessType.FIELD)
 @NoArgsConstructor
-public class Machine implements Serializable {
+public class Machine extends AbstractEntity{
 
     public enum SystemType {
-        DEBIAN, WINDOWS10, WINDOWS7, FEDORA;
+        DEBIAN, WINDOWS10, WINDOWS7, FEDORA
     }
     @Id
     @GeneratedValue
@@ -33,15 +32,17 @@ public class Machine implements Serializable {
     private int RAM;
     @Column
     private int Disk;
-
     @Column
     private SystemType System;
+    @Column
+    private boolean isRented; //TODO ustawic żeby nie można było wypożyczyć tej samej maszyny (wystarczy poprzez flagi)
 
-    public Machine(int CPUs, int RAM, int Disk, SystemType System) {
+    public Machine(int CPUs, int RAM, int Disk, SystemType System, boolean isRented) {
         this.CPUs = CPUs;
         this.RAM = RAM;
         this.Disk = Disk;
         this.System = System;
+        this.isRented = isRented;
     }
 
     public double getBaseCost() throws ParameterException {
@@ -101,6 +102,8 @@ public class Machine implements Serializable {
 
     public SystemType getSystem() { return System; }
 
+    public boolean isRented() { return isRented; }
+
     public void setID(long ID) {
         this.ID = ID;
     }
@@ -118,4 +121,6 @@ public class Machine implements Serializable {
     }
 
     public void setSystem(SystemType system) { System = system; }
+
+    public void setRented(boolean rented) { isRented = rented; }
 }

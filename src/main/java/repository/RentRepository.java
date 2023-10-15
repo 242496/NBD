@@ -21,9 +21,8 @@ public class RentRepository extends Repository<Rent> {
         return list;
     }
 
-
+    @Override
     public Rent getByID(long ID) {
-        Rent rent =  em.find(Rent.class, ID);
-        return rent;
+        return em.find(Rent.class, ID);
     }
 }
