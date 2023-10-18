@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.OptimisticLockException;
 import jakarta.persistence.Persistence;
 import java.util.List;
+import managers.RentManager;
 import model.Advanced;
 import model.Basic;
 import model.Client;
