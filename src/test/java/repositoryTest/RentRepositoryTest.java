@@ -2,6 +2,7 @@ package repositoryTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jakarta.persistence.EntityManager;
@@ -66,6 +67,7 @@ public class RentRepositoryTest {
         assertTrue(em.contains(rent1));
         Rent rent2 = new Rent(client1, machine2);
         rr.add(rent2);
+        assertNotNull(rr.getByID(rent2.getID()));
         assertTrue(em.contains(rent2));
     }
 

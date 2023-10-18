@@ -5,6 +5,7 @@
       <configuration>
         <setting name="validation-enabled" value="true" />
         <datasource-mapping>
+          <factory-entry name="POSTGRES_MACHINE_RENT" />
           <factory-entry name="default" />
         </datasource-mapping>
         <naming-strategy-map />
