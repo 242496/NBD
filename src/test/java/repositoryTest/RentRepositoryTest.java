@@ -61,7 +61,7 @@ public class RentRepositoryTest {
     }
 
     @Test
-    void addTest() throws ParameterException {
+    void addTest() throws Exception {
         Rent rent1 = new Rent(client1, machine1);
         rr.add(rent1);
         assertTrue(em.contains(rent1));
@@ -72,7 +72,7 @@ public class RentRepositoryTest {
     }
 
     @Test
-    void removeTest() throws ParameterException {
+    void removeTest() throws Exception {
         Rent rent1 = new Rent(client1, machine1);
         rr.add(rent1);
         assertTrue(em.contains(rent1));
@@ -81,16 +81,7 @@ public class RentRepositoryTest {
     }
 
     @Test
-    void getIDTest() throws ParameterException {
-        Rent rent1 = new Rent(client1, machine1);
-        rr.add(rent1);
-        rent1.setID(100);
-        assertTrue(em.contains(rent1));
-        assertEquals(rent1.getID(), 100);
-    }
-
-    @Test
-    void findAllTest() throws ParameterException{
+    void findAllTest() throws Exception{
         Rent rent3 = new Rent(client3, machine1);
         Rent rent4 = new Rent(client4, machine2);
         rr.add(rent3);

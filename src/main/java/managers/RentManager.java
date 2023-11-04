@@ -1,65 +1,50 @@
 package managers;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
-import jakarta.persistence.OptimisticLockException;
 import java.util.List;
+import java.util.UUID;
 import model.Client;
 import model.Machine;
 import model.Rent;
-import org.apache.avalon.framework.parameters.ParameterException;
 import repository.RentRepository;
 
 public class RentManager {
     private final RentRepository rentRepository;
     private final EntityManager em;
-    private EntityTransaction et;
 
     public RentManager(EntityManager entityManager) {
         em = entityManager;
         rentRepository = new RentRepository(entityManager);
     }
 
-    public void removeRent(long ID) {
-        et = em.getTransaction();
-        et.begin();
+    public void removeRent(UUID ID) {
         Rent rent = rentRepository.getByID(ID);
         rent.getClient().setActiveRents(rent.getClient().getActiveRents()-1);
         rent.getMachine().setRented(false);
         rentRepository.remove(rent);
-        et.commit();
     }
 
     public List<Rent> findAll() {
-        et = em.getTransaction();
-        et.begin();
         List<Rent> list = rentRepository.findAll();
-        et.commit();
         return list;
     }
 
-    public Rent getRent(long ID) {
-        et = em.getTransaction();
-        et.begin();
+    public Rent getRent(UUID ID) {
         Rent rent = rentRepository.getByID(ID);
-        et.commit();
         return rent;
     }
 
-    public Rent addRent(Client client, Machine machine) throws OptimisticLockException, ParameterException {
+    public Rent addRent(Client client, Machine machine) throws Exception {
         Rent rent;
         if(client.getActiveRents() >= client.getType().getMaxRents()) {
-            throw new OptimisticLockException("Client with ID: " + client.getID() + " has no available rents left");
+            throw new Exception("Client with ID: " + client.getID() + " has no available rents left");
         } else if (machine.isRented()) {
-            throw new OptimisticLockException("Machine with ID: " + machine.getID() + " is already rented");
+            throw new Exception("Machine with ID: " + machine.getID() + " is already rented");
         } else {
             rent = new Rent(client, machine);
-            et = em.getTransaction();
-            et.begin();
             rentRepository.add(rent);
             client.setActiveRents(client.getActiveRents()+1);
             machine.setRented(true);
-            et.commit();
         }
         return rent;
     }

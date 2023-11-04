@@ -2,8 +2,11 @@ package repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.LockModeType;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import java.util.UUID;
 
 public abstract class Repository<T> {
     EntityManagerFactory emf = Persistence.createEntityManagerFactory("POSTGRES_MACHINE_RENT");
@@ -28,5 +31,5 @@ public abstract class Repository<T> {
     }
 
     public abstract List<T> findAll();
-    public abstract T getByID(long ID);
+    public abstract T getByID(UUID ID);
 }

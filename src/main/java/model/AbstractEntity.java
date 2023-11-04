@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotNull;
@@ -17,9 +18,10 @@ import java.util.UUID;
 @Embeddable
 public abstract class AbstractEntity implements Serializable {
 
-    @Column(name = "entity_id")
+    @Id
+    @GeneratedValue(strategy =  GenerationType.AUTO)
     @NotNull
-    private UUID entityId = UUID.randomUUID();
+    public UUID ID;
 
     @Version
     @NotNull

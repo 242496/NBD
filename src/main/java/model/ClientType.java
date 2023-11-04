@@ -17,10 +17,10 @@ import jakarta.validation.Valid;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Access(AccessType.FIELD)
 public abstract class ClientType extends AbstractEntity{
-    @Id
-    @GeneratedValue
-    @Column(name = "Type_ID")
-    protected long ID;
+//    @Id
+//    @GeneratedValue
+//    @Column(name = "Type_ID")
+//    protected long ID;
     @Column
     protected int MaxRents;
     @Column

@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.NoArgsConstructor;
 import org.apache.avalon.framework.parameters.ParameterException;
 
@@ -21,10 +22,10 @@ public class Machine extends AbstractEntity{
     public enum SystemType {
         DEBIAN, WINDOWS10, WINDOWS7, FEDORA
     }
-    @Id
-    @GeneratedValue
-    @Column(name = "Machine_ID")
-    private long ID;
+//    @Id
+//    @GeneratedValue
+//    @Column(name = "Machine_ID")
+//    private long ID;
 
     @Column
     private int CPUs;
@@ -84,7 +85,7 @@ public class Machine extends AbstractEntity{
         return price;
     }
 
-    public long getID() {
+    public UUID getID() {
         return ID;
     }
 
@@ -104,7 +105,7 @@ public class Machine extends AbstractEntity{
 
     public boolean isRented() { return isRented; }
 
-    public void setID(long ID) {
+    public void setID(UUID ID) {
         this.ID = ID;
     }
 

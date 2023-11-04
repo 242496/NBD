@@ -73,14 +73,6 @@ public class MachineRepositoryTest {
     }
 
     @Test
-    void getByIDTest() {
-        machine1.setID(100);
-        mr.add(machine1);
-        assertTrue(em.contains(machine1));
-        assertEquals(machine1.getID(), 100);
-    }
-
-    @Test
     void findAllTest() {
         assertTrue(em.contains(machine1));
         assertTrue(em.contains(machine2));

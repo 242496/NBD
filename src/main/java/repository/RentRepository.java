@@ -5,6 +5,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.From;
 import java.util.List;
+import java.util.UUID;
 import model.Rent;
 
 public class RentRepository extends Repository<Rent> {
@@ -22,7 +23,7 @@ public class RentRepository extends Repository<Rent> {
     }
 
     @Override
-    public Rent getByID(long ID) {
+    public Rent getByID(UUID ID) {
         return em.find(Rent.class, ID);
     }
 }

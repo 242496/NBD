@@ -2,6 +2,7 @@ package model;
 
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
+import java.util.UUID;
 import lombok.NoArgsConstructor;
 
 
@@ -11,10 +12,10 @@ import lombok.NoArgsConstructor;
 @Access(AccessType.FIELD)
 @NoArgsConstructor
 public class Client extends AbstractEntity{
-    @Id
-    @GeneratedValue
-    @Column(name = "Client_ID")
-    private long ID;
+//    @Id
+//    @GeneratedValue
+//    @Column(name = "Client_ID")
+//    private long ID;
 
     @Column
     private String Username;
@@ -41,7 +42,7 @@ public class Client extends AbstractEntity{
 
     public void setType(ClientType type) { Type = type; }
 
-    public long getID() {
+    public UUID getID() {
         return ID;
     }
 
@@ -49,7 +50,7 @@ public class Client extends AbstractEntity{
 
     public void setActiveRents(int activeRents) { ActiveRents = activeRents; }
 
-    public void setID(long ID) {
+    public void setID(UUID ID) {
         this.ID = ID;
     }
 

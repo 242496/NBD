@@ -74,14 +74,6 @@ public class ClientRepositoryTest {
     }
 
     @Test
-    void getByIDTest() {
-        client1.setID(100);
-        cr.add(client1);
-        assertTrue(em.contains(client1));
-        assertEquals(client1.getID(), 100);
-    }
-
-    @Test
     void findAllTest() {
         assertTrue(em.contains(client1));
         assertTrue(em.contains(client2));

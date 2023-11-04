@@ -2,7 +2,9 @@ package managers;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import java.util.UUID;
 import model.Client;
 import model.ClientType;
 import repository.ClientRepository;
@@ -17,35 +19,18 @@ public class ClientManager {
         clientRepository = new ClientRepository(entityManager);
     }
 
-    public void removeClient(long ID) {
-        et = em.getTransaction();
-        et.begin();
+    public void removeClient(UUID ID) {
         clientRepository.remove(clientRepository.getByID(ID));
-        et.commit();
     }
 
     public List<Client> findAll() {
-        et = em.getTransaction();
-        et.begin();
         List<Client> list = clientRepository.findAll();
-        et.commit();
         return list;
-    }
-
-    public Client getClient(long ID) {
-        et = em.getTransaction();
-        et.begin();
-        Client client = clientRepository.getByID(ID);
-        et.commit();
-        return client;
     }
 
     public Client addClient(String Username, ClientType Type) {
         Client client = new Client(Username, Type);
-        et = em.getTransaction();
-        et.begin();
         clientRepository.add(client);
-        et.commit();
         return client;
     }
 }
