@@ -24,7 +24,7 @@ public abstract class AbstractEntity implements Serializable {
     public UUID ID;
 
     @Version
-    @NotNull
-    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
+//    @NotNull
+//    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
     protected long version;
 }

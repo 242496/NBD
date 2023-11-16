@@ -25,10 +25,13 @@ public abstract class ClientType extends AbstractEntity{
     protected int MaxRents;
     @Column
     protected double ClientDiscount;
+    @Column
+    protected int MaxDays;
 
     public ClientType() {
         this.MaxRents = getMaxRents();
         this.ClientDiscount = getClientDiscount();
+        this.MaxDays = getMaxDays();
     }
 
     public int getMaxRents() {
@@ -39,9 +42,6 @@ public abstract class ClientType extends AbstractEntity{
         return ClientDiscount;
     }
 
-    public void setMaxRents(int maxRents) {
-        MaxRents = maxRents;
-    }
 
     public void setClientDiscount(double clientDiscount) {
         ClientDiscount = clientDiscount;
@@ -51,5 +51,5 @@ public abstract class ClientType extends AbstractEntity{
         return price;
     }
 
-    public abstract int getMaxDays();
+    public int getMaxDays() {return MaxDays; }
 }
